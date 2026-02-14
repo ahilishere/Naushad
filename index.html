@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖 Valentine Surprise for Zilya 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+  height:100vh;
+  overflow:hidden;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* slides */
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:20px;
+}
+.slide.active{display:flex;}
+
+h1{font-size:2.4em;margin-bottom:20px;}
+
+button{
+  font-size:1.1em;
+  padding:12px 24px;
+  border:none;
+  border-radius:14px;
+  background:#ff6f91;
+  color:white;
+  cursor:pointer;
+  margin:6px;
+  transition:0.25s;
+}
+button:hover{background:#ff4d6d;transform:scale(1.05);}
+
+#noBtn{position:relative;}
+
+.typed-text{
+  max-width:650px;
+  line-height:1.7em;
+  white-space:pre-wrap;
+  margin-bottom:20px;
+}
+
+/* pretty gift boxes */
+.gift-container{
+  display:flex;
+  gap:24px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.gift-box{
+  width:150px;
+  height:150px;
+  background:linear-gradient(145deg,#ff6f91,#ff4d6d);
+  border-radius:22px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  cursor:pointer;
+  font-size:1.25em;
+  transition:all .25s ease;
+  box-shadow:0 10px 25px rgba(0,0,0,0.25);
+  border:2px solid rgba(255,255,255,0.25);
+}
+.gift-box:hover{
+  transform:translateY(-6px) scale(1.08);
+  box-shadow:0 18px 40px rgba(0,0,0,0.35);
+}
+
+img{
+  max-width:260px;
+  border-radius:16px;
+  margin-top:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* 📱 phone scaling */
+@media (max-width:600px){
+  h1{font-size:1.8em;}
+  .gift-box{width:110px;height:110px;font-size:1em;}
+  .typed-text{font-size:0.95em;}
+  button{font-size:1em;padding:10px 18px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Slide 1 -->
+<div class="slide active" id="slide1">
+  <h1>💖 Will you be my Valentine? 💖</h1>
+  <button id="yesBtn">YES 💕</button>
+  <button id="noBtn">NO 😅</button>
+</div>
+
+<!-- Slide 2 -->
+<div class="slide" id="slide2">
+  <h1>💕 ILYSM Zilya 💕</h1>
+  <div class="typed-text" id="confessionText"></div>
+  <button id="toSlide3Btn" style="display:none;">Next 💖</button>
+</div>
+
+<!-- Slide 3 -->
+<div class="slide" id="slide3">
+  <h1>Choose your gift 🎁</h1>
+  <div class="gift-container">
+    <div class="gift-box" id="flowersBox">🌸<br>Flowers</div>
+    <div class="gift-box" id="chocoBox">🍫<br>Chocolates</div>
+    <div class="gift-box" id="heartBox">❤️<br>My Heart</div>
+  </div>
+</div>
+
+<!-- gift slides -->
+<div class="slide" id="slide4">
+  <h1>heree 😛❤️‍🩹</h1>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Kinder_Chocolate.jpg">
+</div>
+
+<div class="slide" id="slide5">
+  <h1>For youuu 🌹💕</h1>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/Red_rose_bouquet.jpg">
+</div>
+
+<div class="slide" id="slide6">
+  <h1>ilyysmsmsms bro can we crack? 😛😛😛</h1>
+</div>
+
+<audio id="loveSong" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// slides
+const slide1=document.getElementById('slide1');
+const slide2=document.getElementById('slide2');
+const slide3=document.getElementById('slide3');
+const slide4=document.getElementById('slide4');
+const slide5=document.getElementById('slide5');
+const slide6=document.getElementById('slide6');
+const loveSong=document.getElementById('loveSong');
+
+/* YES */
+document.getElementById('yesBtn').onclick=()=>{
+  loveSong.play().catch(()=>{});
+  confetti({particleCount:160,spread:90,origin:{y:0.6}});
+  setTimeout(()=>confetti({particleCount:120,spread:120,origin:{y:0.4}}),400);
+  slide1.classList.remove('active');
+  slide2.classList.add('active');
+  startTyping();
+};
+
+/* moving NO */
+const noBtn=document.getElementById('noBtn');
+let noCount=0;
+noBtn.addEventListener('mouseover',()=>{
+  const x=Math.random()*(window.innerWidth-noBtn.offsetWidth);
+  const y=Math.random()*(window.innerHeight-noBtn.offsetHeight);
+  noBtn.style.position='absolute';
+  noBtn.style.left=x+'px';
+  noBtn.style.top=y+'px';
+});
+noBtn.addEventListener('click',()=>{
+  noCount++;
+  alert(noCount===1?"Nopeee 😅":"Still nopeee 😜");
+});
+
+/* typing */
+const msg=`Ilysmmm zilya yu matter sooo soo much to Mee.
+
+I just wanted you to know how much you mean to me. Talking to you makes my days better, and being around you feels different in the best way. I really like you, and I'm grateful I get to spend this Valentine’s with youuu.
+
+-Yours forever: Aahil..❤️`;
+
+const textDiv=document.getElementById('confessionText');
+const nextBtn=document.getElementById('toSlide3Btn');
+
+function startTyping(){
+  let i=0;
+  function type(){
+    if(i<msg.length){
+      textDiv.innerHTML+=msg[i];
+      i++;
+      setTimeout(type,35);
+    }else{
+      nextBtn.style.display='inline-block';
+    }
+  }
+  type();
+}
+
+nextBtn.onclick=()=>{
+  slide2.classList.remove('active');
+  slide3.classList.add('active');
+};
+
+/* gift tracking */
+let giftsPicked={choco:false,flowers:false,heart:false};
+
+function showGiftThenReturn(slideToShow){
+  slide3.classList.remove('active');
+  slideToShow.classList.add('active');
+
+  setTimeout(()=>{
+    slideToShow.classList.remove('active');
+    slide3.classList.add('active');
+    checkAllPicked();
+  },2200);
+}
+
+document.getElementById('chocoBox').onclick=()=>{
+  giftsPicked.choco=true;
+  showGiftThenReturn(slide4);
+};
+
+document.getElementById('flowersBox').onclick=()=>{
+  giftsPicked.flowers=true;
+  showGiftThenReturn(slide5);
+};
+
+document.getElementById('heartBox').onclick=()=>{
+  giftsPicked.heart=true;
+  showGiftThenReturn(slide6);
+};
+
+function checkAllPicked(){
+  if(giftsPicked.choco && giftsPicked.flowers && giftsPicked.heart){
+    if(!document.getElementById('finalBtn')){
+      const btn=document.createElement('button');
+      btn.id='finalBtn';
+      btn.innerText='One last thing… 💌';
+      btn.style.marginTop='25px';
+      slide3.appendChild(btn);
+      btn.onclick=showFinalLove;
+    }
+  }
+}
+
+function showFinalLove(){
+  slide3.innerHTML=`
+    <h1 style="max-width:700px;">
+    Hey zilya tis website took me abt like 7 hours or so 😭<br><br>
+    sooo yehhh I took a lot of efforttt sooo that meanss….<br><br>
+    <span style="font-size:1.3em;">I LOVE YU MOREEE ❤️❤️</span>
+    </h1>
+  `;
+  confetti({particleCount:220,spread:130,origin:{y:0.6}});
+}
+</script>
+
+</body>
+</html>
